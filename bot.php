@@ -36,16 +36,26 @@ if (count($pesan_datang) > 2) {
 }
 
 #-------------------------[Function]-------------------------#
-function urb_dict($keyword) {
-    $uri = "http://api.urbandictionary.com/v0/define?term=" . $keyword;
+function shalat($keyword) {
+    $uri = "https://time.siswadi.com/pray/" . $keyword;
 
     $response = Unirest\Request::get("$uri");
 
-
     $json = json_decode($response->raw_body, true);
-    $result = $json['list'][0]['definition'];
-    $result .= "\n\nExamples : \n";
-    $result .= $json['list'][0]['example'];
+    $result = "Jadwal Shalat Sekitar ";
+	$result .= $json['location']['address'];
+	$result .= "\nTanggal : ";
+	$result .= $json['time']['date'];
+	$result .= "\n\nShubuh : ";
+	$result .= $json['data']['Fajr'];
+	$result .= "\nDzuhur : ";
+	$result .= $json['data']['Dhuhr'];
+	$result .= "\nAshar : ";
+	$result .= $json['data']['Asr'];
+	$result .= "\nMaghrib : ";
+	$result .= $json['data']['Maghrib'];
+	$result .= "\nIsya : ";
+	$result .= $json['data']['Isha'];
     return $result;
 }
 #-------------------------[Function]-------------------------#
@@ -72,15 +82,15 @@ if ($type == 'join' || $command == '/menu') {
 
 //pesan bergambar
 if($message['type']=='text') {
-	    if ($command == 'def') {
+	    if ($command == '/shalat') {
 
-
+        $result = shalat($options);
         $balas = array(
             'replyToken' => $replyToken,
             'messages' => array(
                 array(
                     'type' => 'text',
-                    'text' => 'Definition : ' . urb_dict($options)
+                    'text' => $result
                 )
             )
         );
