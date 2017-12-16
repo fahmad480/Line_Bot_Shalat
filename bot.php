@@ -1,6 +1,7 @@
 <?php
 /*
 copyright @ medantechno.com
+Modified @ Farzain - zFz
 2017
 
 */
@@ -42,7 +43,7 @@ function shalat($keyword) {
     $response = Unirest\Request::get("$uri");
 
     $json = json_decode($response->raw_body, true);
-    $result = "Jadwal Shalat Sekitar ";
+    $result = "Halo " .$profil->displayName.", Jadwal Shalat Hari ini Di Sekitar";
 	$result .= $json['location']['address'];
 	$result .= "\nTanggal : ";
 	$result .= $json['time']['date'];
@@ -59,12 +60,6 @@ function shalat($keyword) {
     return $result;
 }
 #-------------------------[Function]-------------------------#
-
-# require_once('./src/function/search-1.php');
-# require_once('./src/function/download.php');
-# require_once('./src/function/random.php');
-# require_once('./src/function/search-2.php');
-# require_once('./src/function/hard.php');
 
 //show menu, saat join dan command /menu
 if ($type == 'join' || $command == '/menu') {
@@ -110,133 +105,6 @@ if($message['type']=='text') {
 						);
 				
 	}
-	else
-	if($pesan_datang=='2')
-	{
-		$get_sub = array();
-		$aa =   array(
-						'type' => 'image',									
-						'originalContentUrl' => 'https://medantechno.com/line/images/bolt/1000.jpg',
-						'previewImageUrl' => 'https://medantechno.com/line/images/bolt/240.jpg'	
-						
-					);
-		array_push($get_sub,$aa);	
-
-		$get_sub[] = array(
-									'type' => 'text',									
-									'text' => 'Halo '.$profil->displayName.', Anda memilih menu 2, harusnya gambar muncul.'
-								);
-		
-		$balas = array(
-					'replyToken' 	=> $replyToken,														
-					'messages' 		=> $get_sub
-				 );	
-	}
-	else
-	if($pesan_datang=='3')
-	{
-		
-		$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'text',					
-										'text' => 'Fungsi PHP base64_encode medantechno.com :'. base64_encode("medantechno.com")
-									)
-							)
-						);
-				
-	}
-	else
-	if($pesan_datang=='4')
-	{
-		
-		$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'text',					
-										'text' => 'Jam Server Saya : '. date('Y-m-d H:i:s')
-									)
-							)
-						);
-				
-	}
-	else
-	if($pesan_datang=='6')
-	{
-		
-		$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'location',					
-										'title' => 'Lokasi Saya.. Klik Detail',					
-										'address' => 'Medan',					
-										'latitude' => '3.521892',					
-										'longitude' => '98.623596' 
-									)
-							)
-						);
-				
-	}
-	else
-	if($pesan_datang=='7')
-	{
-		
-		$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'text',					
-										'text' => 'Testing PUSH pesan ke anda'
-									)
-							)
-						);
-						
-		$push = array(
-							'to' => $userId,									
-							'messages' => array(
-								array(
-										'type' => 'text',					
-										'text' => 'Pesan ini dari medantechno.com'
-									)
-							)
-						);
-						
-		
-		$client->pushMessage($push);
-				
-	}
-
-	else{
-
-		$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'text',					
-										'text' => 'Halo.. Selamat datang di medantechno.com .        Untuk testing menu pilih 1,2,3,4,5 ... atau stiker'
-									)
-							)
-						);
-						
-	}
-
-}else if($message['type']=='sticker')
-{	
-	$balas = array(
-							'replyToken' => $replyToken,														
-							'messages' => array(
-								array(
-										'type' => 'text',									
-										'text' => 'Terimakasih stikernya... '										
-									
-									)
-							)
-						);
-						
-}
 if (isset($balas)) {
     $result = json_encode($balas);
 //$result = ob_get_clean();
